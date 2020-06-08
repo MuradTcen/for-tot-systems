@@ -1,24 +1,20 @@
 package moex.com.totsystems.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import moex.com.totsystems.dto.HistoryDto;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "histories")
 @EntityListeners(AuditingEntityListener.class)
 @Data
+@NoArgsConstructor
+@IdClass(Trade.class)
 public class History extends BaseEntity {
 
-    @Id
-    private String secid;
-    @Column
-    private LocalDate tradedate;
     @Column
     private double numtrades;
     @Column
@@ -33,6 +29,24 @@ public class History extends BaseEntity {
     private double close;
     @Column
     private double volume;
+
+    @Id
+    private String secid;
+    @Id
+    private LocalDate tradedate;
+
+    History(Trade trade) {
+        secid = trade.getSecid();
+        tradedate = trade.getTradedate();
+    }
+
+    @Id
+    @AttributeOverrides({
+            @AttributeOverride(name = "secid",
+                    column = @Column(name = "secid")),
+            @AttributeOverride(name = "tradedate",
+                    column = @Column(name = "tradedate"))
+    })
 
     // Можно использовать mapstrcuct
     public static History ofHistoryDto(HistoryDto historyDto) {

@@ -40,7 +40,7 @@
                 volume FLOAT4 NOT NULL,
                 created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
-                PRIMARY KEY(secid));
+                PRIMARY KEY(secid, tradedate));
         </sql>
         <rollback>
             <sql>
