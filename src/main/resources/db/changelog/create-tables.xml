@@ -48,4 +48,16 @@
             </sql>
         </rollback>
     </changeSet>
+
+    <changeSet author="muradtcen" id="add_security_fk">
+        <sql>
+            ALTER TABLE histories ADD CONSTRAINT security_fk FOREIGN KEY (secid) REFERENCES securities (secid);
+        </sql>
+        <rollback>
+            <sql>
+                DROP CONSTRAINT security_fk;
+            </sql>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>
