@@ -43,21 +43,15 @@ processResources {
 	dependsOn "buildReact"
 }
 
-task buildReact(type: Exec) {
+task buildReact(type: NpmTask) {
 	dependsOn "installReact"
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	commandLine "npm", "run-script", "build"
+	args = ["run-script", "build"]
 }
 
-task installReact(type: Exec) {
+task installReact(type: NpmTask) {
 	dependsOn "npm_install"
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	commandLine "npm", "audit", "fix"
-	commandLine "npm", "install"
+	args = ["audit", "fix"]
+	args = ["install"]
 }
 
 task copyWebApp(type: Copy) {
