@@ -1,1 +1,2 @@
 rootProject.name = 'tot-systems'
+include 'npm-app'

@@ -1,9 +1,22 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
 
+apply plugin: 'com.moowork.node'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'moex.com'
@@ -14,6 +27,12 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+node {
+	version = '10.14.1'
+	npmVersion = '6.4.1'
+	download = true
 }
 
 repositories {
@@ -28,6 +47,8 @@ sourceSets {
 		}
 	}
 }
+
+assemble.dependsOn npm_run_build
 
 processResources {
 	dependsOn "buildReact"
