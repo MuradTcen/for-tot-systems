@@ -21,7 +21,7 @@ export class SecurityList extends Component {
     }
 
     findAllSecurities() {
-        axios.get("http://localhost:8088/api/security/")
+        axios.get("api/security/")
             .then(response => response.data)
             .then((data) => {
                 this.setState({securities: data})
@@ -29,7 +29,7 @@ export class SecurityList extends Component {
     }
 
     deleteSecurity = (securitySecid) => {
-        axios.delete("http://localhost:8088/api/security/" + securitySecid)
+        axios.delete("api/security/" + securitySecid)
             .then((response) => {
                 if (response.data != null) {
                     this.setState({"show": true});

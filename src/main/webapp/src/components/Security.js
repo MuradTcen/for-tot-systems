@@ -30,7 +30,7 @@ export class Security extends Component {
     }
 
     findSecurityBySecid = (securitySecid) => {
-        axios.get("http://localhost:8088/api/security/" + securitySecid)
+        axios.get("api/security/" + securitySecid)
             .then(response => {
                 if (response.data != null) {
                     this.setState({
@@ -63,7 +63,7 @@ export class Security extends Component {
             isTraded: this.state.isTraded
         };
 
-        axios.post("http://localhost:8088/api/security/", security)
+        axios.post("api/security/", security)
             .then(response => {
                 if (response.data != null) {
                     this.setState({"show": true, "method": "post"});
@@ -88,7 +88,7 @@ export class Security extends Component {
             isTraded: this.state.isTraded
         };
 
-        axios.put("http://localhost:8088/api/security/", security)
+        axios.put("api/security/", security)
             .then(response => {
                 if (response.data != null) {
                     this.setState({"show": true, "method": "put"});
