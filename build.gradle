@@ -22,7 +22,7 @@ node {
 	version = '10.14.1'
 	npmVersion = '6.4.1'
 	download = true
-	npmWorkDir = file("${project.buildDir}/src/main/webapp/npm")
+	npmWorkDir = file("${project.buildDir}/npm")
 	nodeModulesDir = file("${project.projectDir}/src/main/webapp")
 }
 
