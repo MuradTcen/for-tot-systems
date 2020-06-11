@@ -52,6 +52,7 @@ task buildReact(type: Exec) {
 }
 
 task installReact(type: Exec) {
+	dependsOn "npm_install"
 	workingDir "$webappDir"
 	inputs.dir "$webappDir"
 	group = BasePlugin.BUILD_GROUP
@@ -64,6 +65,7 @@ task copyWebApp(type: Copy) {
 	into "$projectDir/src/main/resources/static"
 }
 
+npm_install.dependsOn(npm_cache_clean)
 copyWebApp.dependsOn 'buildReact'
 compileJava.dependsOn copyWebApp
 
