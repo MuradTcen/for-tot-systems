@@ -65,7 +65,6 @@ task copyWebApp(type: Copy) {
 	into "$projectDir/src/main/resources/static"
 }
 
-npm_install.dependsOn(npm_cache_clean)
 copyWebApp.dependsOn 'buildReact'
 compileJava.dependsOn copyWebApp
 
