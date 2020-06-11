@@ -23,6 +23,7 @@ import java.util.List;
 @Slf4j
 @Validated
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class SecurityController {
 
     private final SecurityService securityService;
@@ -35,7 +36,7 @@ public class SecurityController {
     }
 
     @ApiOperation(value = "Получить данные ценной бумаги")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "{secid}")
     public Security one(@PathVariable String secid, HttpServletResponse response) {
         return securityService.getBySecid(secid)
