@@ -26,4 +26,6 @@ public interface HistoryService {
     List<SimpleHistoryDto> findAllCustom();
 
     Page<SimpleHistoryDto> findAllCustomAnother(HistoryFilterAndPagination historyFilterAndPagination);
+
+    Optional<History> getFirstByTradedateAndSecid(LocalDate parse, String secid);
 }

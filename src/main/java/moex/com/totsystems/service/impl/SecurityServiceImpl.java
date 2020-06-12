@@ -37,7 +37,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public Optional<Security> update(SecurityDto dto) {
-        Security security = repository.findById(dto.getSecid()).orElseThrow(
+        Security security = repository.findFirstBySecid(dto.getSecid()).orElseThrow(
                 () -> new EntityNotFoundException("Security Not Found")
         );
 
@@ -45,6 +45,7 @@ public class SecurityServiceImpl implements SecurityService {
         Optional.ofNullable(dto.getEmitentTitle()).ifPresent(security::setEmitentTitle);
         Optional.ofNullable(dto.getRegnumber()).ifPresent(security::setRegnumber);
         Optional.ofNullable(dto.getShortname()).ifPresent(security::setShortname);
+        Optional.ofNullable(dto.isTraded()).ifPresent(security::setTraded);
 
         return Optional.of(security);
     }

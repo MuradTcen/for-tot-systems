@@ -100,4 +100,9 @@ public class HistoryServiceImpl implements HistoryService {
 
         return repository.findAll(filterHistoryByField, sortByField).map(history -> SimpleHistoryDto.of(history));
     }
+
+    @Override
+    public Optional<History> getFirstByTradedateAndSecid(LocalDate date, String secid) {
+        return repository.findByTradedateAndSecid(date, secid);
+    }
 }

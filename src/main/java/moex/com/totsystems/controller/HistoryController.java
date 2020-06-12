@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("/api/history/")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class HistoryController {
 
     private final HistoryService historyService;
@@ -33,6 +35,15 @@ public class HistoryController {
     @GetMapping(value = "date/{date}")
     public List<History> listByDate(@PathVariable String date) {
         return historyService.getAllByDate(LocalDate.parse(date));
+    }
+
+    @ApiOperation(value = "Получить историю ценной бумаги по дате и secid")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "{secid}/{date}")
+    public History listByDate(@PathVariable String secid, @PathVariable String date) {
+        return historyService.getFirstByTradedateAndSecid(LocalDate.parse(date), secid)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "History Not Found"));
     }
 
     @ApiOperation(value = "Получить историю ценной бумаги по secid")
