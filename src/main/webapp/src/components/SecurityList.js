@@ -62,16 +62,6 @@ export class SecurityList extends Component {
                                 <th>Is Traded</th>
                                 <th>Emitent Title</th>
                                 <th>Actions</th>
-
-                                {/*<th>Secid</th>*/}
-                                {/*<th>Regnumber</th>*/}
-                                {/*<th>Name</th>*/}
-                                {/*<th>Emitent Title</th>*/}
-                                {/*<th>Tradedate</th>*/}
-                                {/*<th>Numtrades</th>*/}
-                                {/*<th>Open</th>*/}
-                                {/*<th>Close</th>*/}
-                                {/*<th>Actions</th>*/}
                             </tr>
                             </thead>
                             <tbody>
@@ -88,18 +78,9 @@ export class SecurityList extends Component {
                                         <td>{security.traded ? <FontAwesomeIcon icon={faCheckSquare}/> :
                                             <FontAwesomeIcon icon={faSquare}/>}</td>
                                         <td>{security.emitentTitle}</td>
-
-                                        {/*<td>{security.secid}</td>*/}
-                                        {/*<td>{security.regnumber}</td>*/}
-                                        {/*<td>{security.name}</td>*/}
-                                        {/*<td>{security.emitentTitle}</td>*/}
-                                        {/*<td>{security.tradedate}</td>*/}
-                                        {/*<td>{security.numtrades}</td>*/}
-                                        {/*<td>{security.open}</td>*/}
-                                        {/*<td>{security.close}</td>*/}
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"edit/" + security.secid} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
+                                                <Link to={"edit-security/" + security.secid} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
                                                 <Button size="sm" variant="outline-danger" onClick={this.deleteSecurity.bind(this, security.secid)}>
                                                     <FontAwesomeIcon icon={faTrash}/>
                                                 </Button>{' '}
