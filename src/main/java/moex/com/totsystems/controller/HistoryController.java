@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/api/history/")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://tot-systems.herokuapp.com/"})
 public class HistoryController {
 
     private final HistoryService historyService;

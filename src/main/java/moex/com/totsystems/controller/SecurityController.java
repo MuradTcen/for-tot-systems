@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 @Validated
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://tot-systems.herokuapp.com/"})
 public class SecurityController {
 
     private final SecurityService securityService;
