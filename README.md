@@ -60,8 +60,11 @@ ClickHouse для хранения histories, т.к много статисти�
 
 5. Прикручен Swagger https://tot-systems.herokuapp.com/swagger-ui.html#
 
+[![imageup.ru](https://imageup.ru/img213/3618426/swaggerui.png)](https://imageup.ru/img213/3618426/swaggerui.png.html)
+
 6. Проект задеплоен на Heroku https://tot-systems.herokuapp.com
 
+[![imageup.ru](https://imageup.ru/img83/3618425/histories.png)](https://imageup.ru/img83/3618425/histories.png.html)
 ##### Что в работе:
 (За пятницу и субботу планирую сделать)
 1. Доделать Front-end (History)
