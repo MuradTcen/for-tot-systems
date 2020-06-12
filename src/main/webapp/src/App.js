@@ -35,7 +35,8 @@ function App() {
                             <Route path="/histories" exact component={HistoryList}/>
                             <Route path="/import-securities" exact component={ImportSecurities}/>
                             <Route path="/import-histories" exact component={ImportHistories}/>
-                            <Route path='/swagger' component={() => { window.location = 'http://localhost/swagger-ui.html#'; return null;} }/>
+                            //todo: разобраться с редиректом на страницу сваггера
+                            <Route path='/swagger' component={() => { window.location = 'https://tot-systems.herokuapp.com/swagger-ui.html#'; return null;} }/>
                             <Route path='/github' component={() => { window.location = 'https://github.com/MuradTcen/for-tot-systems'; return null;} }/>
                         </Switch>
                     </Col>
