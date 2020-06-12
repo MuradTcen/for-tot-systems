@@ -30,7 +30,7 @@ export class Security extends Component {
     }
 
     findSecurityBySecid = (securitySecid) => {
-        axios.get("api/security/" + securitySecid)
+        axios.get("http://localhost:8080//api/security/" + securitySecid)
             .then(response => {
                 if (response.data != null) {
                     this.setState({
@@ -39,7 +39,7 @@ export class Security extends Component {
                         regnumber: response.data.regnumber,
                         name: response.data.name,
                         emitentTitle: response.data.emitentTitle,
-                        isTraded: response.data.isTraded,
+                        isTraded: response.data.isTraded ? "on" : "false",
                     })
                 }
             }).catch((error) => {
@@ -63,7 +63,7 @@ export class Security extends Component {
             isTraded: this.state.isTraded
         };
 
-        axios.post("api/security/", security)
+        axios.post("http://localhost:8080//api/security/", security)
             .then(response => {
                 if (response.data != null) {
                     this.setState({"show": true, "method": "post"});
@@ -81,6 +81,7 @@ export class Security extends Component {
         event.preventDefault();
 
         const security = {
+            secid: this.state.secid,
             shortname: this.state.shortname,
             regnumber: this.state.regnumber,
             name: this.state.name,
@@ -88,7 +89,7 @@ export class Security extends Component {
             isTraded: this.state.isTraded
         };
 
-        axios.put("api/security/", security)
+        axios.put("http://localhost:8080/api/security/", security)
             .then(response => {
                 if (response.data != null) {
                     this.setState({"show": true, "method": "put"});
@@ -99,7 +100,7 @@ export class Security extends Component {
             });
 
         this.setState(this.initialState);
-    }
+    };
 
     securityChange = event => {
         this.setState({
@@ -128,12 +129,12 @@ export class Security extends Component {
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={this.state.secid ? faEdit : faPlusSquare}/>{this.state.secid ? " Update Security" : " Add New Security"}</Card.Header>
-                    <Form onReset={this.resetSecurity} onSubmit={this.state.secid ? this.updateSecurity : this.submitSecurity} id="securityFormId">
+                    <Form onReset={this.resetSecurity} onSubmit={this.props.match.params.id? this.updateSecurity : this.submitSecurity} id="securityFormId">
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridSecid">
                                     <Form.Label>Secid</Form.Label>
-                                    <Form.Control required autoComplete="off"
+                                    <Form.Control required autoComplete="off" readOnly={this.props.match.params.id}
                                                   type="text" name="secid"
                                                   value={secid} onChange={this.securityChange}
                                                   className={"bg-dark text-white"}
@@ -185,7 +186,7 @@ export class Security extends Component {
                         </Card.Body>
                         <Card.Footer style={{"textAlign": "right"}}>
                             <Button size="sm" variant="success" type="submit">
-                                <FontAwesomeIcon icon={faSave}/> {this.state.secid ? "Update" : "Save"}
+                                <FontAwesomeIcon icon={faSave}/> {this.props.match.params.id ? "Update" : "Save"}
                             </Button>{' '}
                             <Button size="sm" variant="info" type="reset">
                                 <FontAwesomeIcon icon={faUndo}/> Reset

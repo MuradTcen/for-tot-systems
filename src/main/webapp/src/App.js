@@ -9,6 +9,10 @@ import Welcome from "./components/Welcome";
 import Footer from "./components/Footer"
 import {Security} from "./components/Security";
 import {SecurityList} from "./components/SecurityList";
+import {History} from "./components/History";
+import {HistoryList} from "./components/HistoryList";
+import {ImportSecurities} from "./components/ImportSecurities";
+import {ImportHistories} from "./components/ImportHistories";
 
 function App() {
     const marginTop = {
@@ -23,9 +27,16 @@ function App() {
                     <Col lg={14} style={marginTop}>
                         <Switch>
                             <Route path="/" exact component={Welcome}/>
-                            <Route path="/add" exact component={Security}/>
-                            <Route path="/edit/:id" exact component={Security}/>
-                            <Route path="/list" exact component={SecurityList}/>
+                            <Route path="/add-security" exact component={Security}/>
+                            <Route path="/edit-security/:id" exact component={Security}/>
+                            <Route path="/securities" exact component={SecurityList}/>
+                            <Route path="/add-history" exact component={History}/>
+                            <Route path="/edit-history/:secid/:date" exact component={History}/>
+                            <Route path="/histories" exact component={HistoryList}/>
+                            <Route path="/import-securities" exact component={ImportSecurities}/>
+                            <Route path="/import-histories" exact component={ImportHistories}/>
+                            <Route path='/swagger' component={() => { window.location = 'http://localhost:8080/swagger-ui.html#'; return null;} }/>
+                            <Route path='/github' component={() => { window.location = 'https://github.com/MuradTcen/for-tot-systems'; return null;} }/>
                         </Switch>
                     </Col>
                 </Row>
