@@ -68,7 +68,7 @@ export class Security extends Component {
                 if (response.data != null) {
                     this.setState({"show": true, "method": "post"});
                     setTimeout(() => this.setState({"show": false}), 3000);
-                    setTimeout(() => this.securities(), 3000);
+                    setTimeout(() => this.histories(), 3000);
                 } else {
                     this.setState({"show": false});
                 }
@@ -115,7 +115,7 @@ export class Security extends Component {
     };
 
     securities = () => {
-        return this.props.history.push("/list");
+        return this.props.history.push("/securities");
     };
 
     render() {
