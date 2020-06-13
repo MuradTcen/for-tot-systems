@@ -29,7 +29,7 @@ export class HistoryList extends Component {
             currentPage: 1,
             filterField: 'EMITENT_TITLE',
             sortField: 'EMITENT_TITLE',
-            historiesPerPage: 2,
+            historiesPerPage: 5,
             sortToggle: true
         };
     }

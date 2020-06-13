@@ -1,8 +1,16 @@
 import React, {Component} from "react";
 
-import {Button, ButtonGroup, Card, Table} from "react-bootstrap";
+import {Button, ButtonGroup, Card, FormControl, InputGroup, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheckSquare, faEdit, faList, faSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {
+    faCheckSquare,
+    faEdit,
+    faFastBackward, faFastForward,
+    faList,
+    faSquare,
+    faStepBackward, faStepForward,
+    faTrash
+} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import {MyToast} from "./MyToast";
 import {Link} from "react-router-dom";
@@ -12,19 +20,29 @@ export class SecurityList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            securities: []
+            securities: [],
+            currentPage: 1,
+            securitiesPerPage: 5,
+            totalElements: 0
         };
     }
 
     componentDidMount() {
-        this.findAllSecurities();
+        this.findAllSecurities(this.state.currentPage);
     }
 
-    findAllSecurities() {
-        axios.get("http://localhost:8080/api/security/")
+    findAllSecurities(currentPage) {
+        currentPage -= 1;
+
+        axios.get("http://localhost:8080/api/security?page=" + currentPage + "&size=" + this.state.securitiesPerPage)
             .then(response => response.data)
             .then((data) => {
-                this.setState({securities: data})
+                this.setState({
+                    securities: data.content,
+                    totalPages: data.totalPages,
+                    totalElements: data.totalElements,
+                    currentPage: data.number + 1
+                })
             });
     }
 
@@ -43,7 +61,44 @@ export class SecurityList extends Component {
             });
     };
 
+    changePage = event => {
+        let targetPage = parseInt(event.target.value);
+        this.findAllSecurities(targetPage);
+        this.state({
+            [event.target.name]: targetPage
+        });
+    };
+
+    firstPage = () => {
+        let firstPage = 1;
+        if (this.state.currentPage > firstPage) {
+            this.findAllSecurities(firstPage);
+        }
+    };
+
+    prevPage = () => {
+        let prevPage = 1;
+        if (this.state.currentPage > prevPage) {
+            this.findAllSecurities(this.state.currentPage - prevPage);
+        }
+    };
+
+    lastPage = () => {
+        let condition = Math.ceil(this.state.totalElements / this.state.securitiesPerPage);
+        if (this.state.currentPage < condition) {
+            this.findAllSecurities(condition);
+        }
+    };
+
+    nextPage = () => {
+        if (this.state.currentPage < Math.ceil(this.state.totalElements / this.state.securitiesPerPage)) {
+            this.findAllSecurities(this.state.currentPage + 1);
+        }
+    };
+
     render() {
+        const {securities, currentPage, totalPages} = this.state;
+
         return (
             <div>
                 <div style={{"display": this.state.show ? "block" : "none"}}>
@@ -52,7 +107,7 @@ export class SecurityList extends Component {
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header><FontAwesomeIcon icon={faList}/> Securities</Card.Header>
                     <Card.Body>
-                        <Table bordered hover striped variant="dark">
+                        <Table bordered hover striped variant="dark" size="sm">
                             <thead>
                             <tr>
                                 <th>Secid</th>
@@ -80,8 +135,11 @@ export class SecurityList extends Component {
                                         <td>{security.emitentTitle}</td>
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"edit-security/" + security.secid} className="btn btn-sm btn-outline-primary"><FontAwesomeIcon icon={faEdit}/></Link>{' '}
-                                                <Button size="sm" variant="outline-danger" onClick={this.deleteSecurity.bind(this, security.secid)}>
+                                                <Link to={"edit-security/" + security.secid}
+                                                      className="btn btn-sm btn-outline-primary"><FontAwesomeIcon
+                                                    icon={faEdit}/></Link>{' '}
+                                                <Button size="sm" variant="outline-danger"
+                                                        onClick={this.deleteSecurity.bind(this, security.secid)}>
                                                     <FontAwesomeIcon icon={faTrash}/>
                                                 </Button>{' '}
                                             </ButtonGroup>
@@ -92,6 +150,43 @@ export class SecurityList extends Component {
                             </tbody>
                         </Table>
                     </Card.Body>
+                    {securities.length > 0 ?
+                        <Card.Footer>
+                            <div style={{"float": "left"}}>
+                                Showing Page {currentPage} of {totalPages}
+                            </div>
+                            <div style={{"float": "right"}}>
+                                <InputGroup size="sm">
+                                    <InputGroup.Prepend>
+                                        <Button type="button" variant="outline-info"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={this.firstPage}>
+                                            <FontAwesomeIcon icon={faFastBackward}/> First
+                                        </Button>
+                                        <Button type="button" variant="outline-info"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={this.prevPage}>
+                                            <FontAwesomeIcon icon={faStepBackward}/> Prev
+                                        </Button>
+                                    </InputGroup.Prepend>
+                                    <FormControl className={"page-num bg-dark"} name="currentPage" value={currentPage}
+                                                 onChange={this.changePage}/>
+                                    <InputGroup.Append>
+                                        <Button type="button" variant="outline-info"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={this.nextPage}>
+                                            <FontAwesomeIcon icon={faStepForward}/> Next
+                                        </Button>
+                                        <Button type="button" variant="outline-info"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={this.lastPage}>
+                                            <FontAwesomeIcon icon={faFastForward}/> Last
+                                        </Button>
+                                    </InputGroup.Append>
+                                </InputGroup>
+                            </div>
+                        </Card.Footer> : null
+                    }
                 </Card>
             </div>
         );
