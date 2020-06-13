@@ -1,11 +1,13 @@
 package moex.com.totsystems.repository.specification;
 
 import lombok.extern.slf4j.Slf4j;
+import moex.com.totsystems.dto.enums.FilterField;
 import moex.com.totsystems.entity.History;
 import moex.com.totsystems.entity.Security;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.time.LocalDate;
 
 @Slf4j
 public class FilterHistoryByField implements Specification<History> {
@@ -13,15 +15,21 @@ public class FilterHistoryByField implements Specification<History> {
     private String field;
 
     public FilterHistoryByField(String desiredContent, String field) {
-        this.desiredContent = "%" + desiredContent.toLowerCase() + "%";
+        this.desiredContent = desiredContent;
         this.field = field;
     }
 
     @Override
     public Predicate toPredicate(Root<History> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        if (desiredContent.equals("%%")) return null;
-        Join<History, Security> join = root.join("security", JoinType.INNER);
+        if (desiredContent.equals("")) return null;
 
-        return cb.like(cb.lower(join.get(field)), desiredContent);
+        if (field.equals(FilterField.EMITENT_TITLE.getName())) {
+            desiredContent = "%" + desiredContent.toLowerCase() + "%";
+            Join<History, Security> join = root.join("security", JoinType.INNER);
+
+            return cb.like(cb.lower(join.get(field)), desiredContent);
+        } else {
+            return cb.equal(root.get(field), LocalDate.parse(desiredContent));
+        }
     }
 }
