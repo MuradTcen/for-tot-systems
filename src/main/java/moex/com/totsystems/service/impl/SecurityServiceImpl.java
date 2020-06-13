@@ -6,6 +6,8 @@ import moex.com.totsystems.entity.Security;
 import moex.com.totsystems.repository.SecurityRepository;
 import moex.com.totsystems.service.SecurityService;
 import moex.com.totsystems.util.xml.XMLstaxSecurityParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,8 @@ public class SecurityServiceImpl implements SecurityService {
     private final XMLstaxSecurityParser parser;
 
     @Override
-    public List<Security> getAll() {
-        return repository.findAll();
+    public Page<Security> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override

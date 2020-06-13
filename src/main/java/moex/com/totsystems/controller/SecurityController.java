@@ -7,6 +7,8 @@ import moex.com.totsystems.dto.SecurityDto;
 import moex.com.totsystems.entity.Security;
 import moex.com.totsystems.service.FileStorageService;
 import moex.com.totsystems.service.SecurityService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/security/")
+@RequestMapping("/api/security")
 @Slf4j
 @Validated
 @RequiredArgsConstructor
@@ -31,8 +32,8 @@ public class SecurityController {
 
     @ApiOperation(value = "Получить список ценных бумаг")
     @GetMapping
-    public List<Security> list() {
-        return securityService.getAll();
+    public Page<Security> list(int page, int size) {
+        return securityService.getAll(PageRequest.of(page, size));
     }
 
     @ApiOperation(value = "Получить данные ценной бумаги")
