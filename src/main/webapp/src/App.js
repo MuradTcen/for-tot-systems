@@ -24,7 +24,7 @@ function App() {
             <NavigationBar/>
             <Container>
                 <Row>
-                    <Col lg={14} style={marginTop}>
+                    <Col lg={14} className={"margin-top"}>
                         <Switch>
                             <Route path="/" exact component={Welcome}/>
                             <Route path="/add-security" exact component={Security}/>
