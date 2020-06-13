@@ -3,10 +3,9 @@ import './App.css';
 import {NavigationBar} from './components/NavigationBar';
 
 import {Col, Container, Row} from "react-bootstrap";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import Welcome from "./components/Welcome";
-import Footer from "./components/Footer"
 import {Security} from "./components/Security";
 import {SecurityList} from "./components/SecurityList";
 import {History} from "./components/History";
@@ -42,7 +41,6 @@ function App() {
                     </Col>
                 </Row>
             </Container>
-          <Footer/>
         </Router>
     );
 }
