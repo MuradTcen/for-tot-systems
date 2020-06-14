@@ -9,6 +9,7 @@ import moex.com.totsystems.dto.SimpleHistoryDto;
 import moex.com.totsystems.entity.History;
 import moex.com.totsystems.service.FileStorageService;
 import moex.com.totsystems.service.HistoryService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,9 @@ public class HistoryController {
 
     private final HistoryService historyService;
     private final FileStorageService fileStorageService;
+
+    @Value(value = "${upload.directory}")
+    private String directory;
 
     @ApiOperation(value = "Получить историю ценных бумаг по дате")
     @ResponseStatus(HttpStatus.OK)
@@ -94,9 +98,8 @@ public class HistoryController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "import")
     public void importByXml(@RequestParam("file") MultipartFile file) {
-        //todo: проверку на тип файла и сделать проперти
         String filename = fileStorageService.storeFile(file);
-        historyService.importByXml("upload/" + filename);
+        historyService.importByXml(directory + filename);
     }
 
     @ApiOperation(value = "Загрузить истории из XML-файлов")

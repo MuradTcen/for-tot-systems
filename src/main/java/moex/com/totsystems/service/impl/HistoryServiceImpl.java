@@ -1,6 +1,7 @@
 package moex.com.totsystems.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import moex.com.totsystems.dto.HistoryDto;
 import moex.com.totsystems.dto.HistoryFilterAndPagination;
 import moex.com.totsystems.dto.SimpleHistoryDto;
@@ -10,6 +11,7 @@ import moex.com.totsystems.repository.SecurityRepository;
 import moex.com.totsystems.repository.specification.FilterHistoryByField;
 import moex.com.totsystems.service.HistoryService;
 import moex.com.totsystems.util.xml.XMLstaxHistoryParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,17 +21,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class HistoryServiceImpl implements HistoryService {
 
     private final HistoryRepository repository;
     private final SecurityRepository securityRepository;
-    private final XMLstaxHistoryParser parser;
+    private final XMLstaxHistoryParser historyParser;
+    private final SecurityServiceImpl securityService;
+    private final MoexServiceImpl moexService;
+
+    @Value(value = "${upload.directory}")
+    private String directory;
 
     @Override
     public List<History> getAllByDate(LocalDate date) {
@@ -44,10 +54,22 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public History addHistory(History history) {
         if (securityRepository.findById(history.getSecid()).isPresent()) {
-            return repository.save(history);
+            repository.save(history);
+            return null;
         }
-        //todo
-        return null;
+        return history;
+    }
+
+    public void addFailedHistory(History history) {
+        log.info("Start failed securty downloading with secid: " + history);
+        moexService.downloadFile(history.getSecid());
+        securityService.importByXml(directory + history.getSecid() + ".xml");
+
+        if (securityRepository.findById(history.getSecid()).isPresent()) {
+            repository.save(history);
+        } else {
+            log.error("Problem during downloading security with secid: " + history.getSecid());
+        }
     }
 
     @Override
@@ -79,8 +101,12 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public void importByXml(String file) {
-        List<History> histories = parser.parseXMLfile(file);
-        histories.forEach(history -> addHistory(history));
+        List<History> histories = historyParser.parseXMLfile(file);
+        Set<History> failed = new HashSet<>();
+        histories.forEach(history -> failed.add(addHistory(history)));
+
+        failed.remove(null);
+        failed.forEach(history -> addFailedHistory(history));
     }
 
     @Override
