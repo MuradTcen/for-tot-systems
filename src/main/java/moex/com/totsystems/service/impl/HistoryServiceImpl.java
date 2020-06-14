@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     public void addFailedHistory(History history) {
         log.info("Start failed securty downloading with secid: " + history);
-        moexService.downloadFile(history.getSecid());
+        moexService.downloadSecurityFile(history.getSecid());
         securityService.importByXml(directory + history.getSecid() + ".xml");
 
         if (securityRepository.findById(history.getSecid()).isPresent()) {
@@ -98,6 +99,17 @@ public class HistoryServiceImpl implements HistoryService {
 
         repository.deleteByTradedateAndSecid(date, secid);
     }
+
+    //todo: сделать удаление старых файлов и удаление старых записей
+    @Override
+    @Scheduled(cron = "${cron.expression}")
+    public void getCurrentHistories() {
+        String date = LocalDate.now().toString();
+        log.info("Started downloading current history by date: " + date);
+        String filename = moexService.downloadHistoryFile("2020-06-11");
+        importByXml(directory + filename);
+    }
+
 
     @Override
     public void importByXml(String file) {

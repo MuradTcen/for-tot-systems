@@ -28,6 +28,7 @@ public class XMLstaxHistoryParser {
         boolean dataAvailable = true;
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
+            log.info("Filename for parsing: " + fileName);
             XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(fileName));
             while (reader.hasNext()) {
                 XMLEvent xmlEvent = reader.nextEvent();

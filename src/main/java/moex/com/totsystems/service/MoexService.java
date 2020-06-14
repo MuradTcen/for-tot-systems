@@ -1,5 +1,7 @@
 package moex.com.totsystems.service;
 
 public interface MoexService {
-    void downloadFile(String secid);
+    void downloadSecurityFile(String secid);
+
+    String downloadHistoryFile(String date);
 }

@@ -5,6 +5,7 @@ import moex.com.totsystems.dto.HistoryFilterAndPagination;
 import moex.com.totsystems.dto.SimpleHistoryDto;
 import moex.com.totsystems.entity.History;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,9 @@ public interface HistoryService {
     Optional<History> update(HistoryDto historyDto);
 
     void deleteByDateAndSecid(LocalDate parse, String secid);
+
+    @Scheduled(fixedRate = 5000)
+    void getCurrentHistories();
 
     void importByXml(String s);
 

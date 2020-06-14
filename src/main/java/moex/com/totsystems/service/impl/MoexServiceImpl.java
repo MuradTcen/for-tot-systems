@@ -17,19 +17,35 @@ import java.net.URL;
 public class MoexServiceImpl implements MoexService {
 
     @Value(value = "${moex.api.url}")
-    private String url;
+    private String securityUrl;
 
     @Value(value = "${upload.directory}")
     private String directory;
 
+    @Value(value = "${moex.history.api.url}")
+    private String historyUrl;
+
     @Override
-    public void downloadFile(String secid) {
-        log.info("Start downloading " + secid + ".xml");
+    public void downloadSecurityFile(String secid) {
+        log.info("Start downloading securities.xml by secid: " + secid);
 
         try {
-            FileUtils.copyURLToFile(new URL(url + "/" + secid), new File(directory + secid + ".xml"));
+            FileUtils.copyURLToFile(new URL(securityUrl + secid), new File(directory + secid + ".xml"));
         } catch (IOException e) {
             log.error("Exception during downloading security.xml: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String downloadHistoryFile(String date) {
+        log.info("Start downloading histories.xml by date: " + date);
+        String filename = "histories_" +date + ".xml";
+        try {
+            FileUtils.copyURLToFile(new URL(historyUrl + date), new File(directory + filename));
+        } catch (IOException e) {
+            log.error("Exception during downloading security.xml: " + e.getMessage());
+        }
+
+        return filename;
     }
 }
