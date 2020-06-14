@@ -6,6 +6,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import Welcome from "./components/Welcome";
+import Footer from "./components/Footer";
 import {Security} from "./components/Security";
 import {SecurityList} from "./components/SecurityList";
 import {History} from "./components/History";
@@ -14,9 +15,6 @@ import {ImportSecurities} from "./components/ImportSecurities";
 import {ImportHistories} from "./components/ImportHistories";
 
 function App() {
-    const marginTop = {
-        marginTop: "20px"
-    };
 
     return (
         <Router>
@@ -40,6 +38,7 @@ function App() {
                         </Switch>
                     </Col>
                 </Row>
+                <Footer/>
             </Container>
         </Router>
     );
