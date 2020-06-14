@@ -52,9 +52,10 @@ public class XMLstaxHistoryParser {
                 }
             }
 
-        } catch (FileNotFoundException | XMLStreamException exc) {
-            exc.printStackTrace();
+        } catch (FileNotFoundException | XMLStreamException e) {
+            log.error("Error during parsing {}", e.getMessage());
         }
+
         return histories;
     }
 
@@ -91,7 +92,7 @@ public class XMLstaxHistoryParser {
                 history.setLow(Double.parseDouble(low.getValue()));
             }
 
-            Attribute high = startElement.getAttributeByName(new QName("IGH"));
+            Attribute high = startElement.getAttributeByName(new QName("HIGH"));
             if (high != null && !high.getValue().isEmpty()) {
                 history.setHigh(Double.parseDouble(high.getValue()));
             }

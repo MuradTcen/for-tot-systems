@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+<data id="securities">
+<metadata>
+<columns>
+<column name="id" type="int32" />
+<column name="secid" type="string" bytes="36" max_size="0" />
+<column name="shortname" type="string" bytes="189" max_size="0" />
+<column name="regnumber" type="string" bytes="189" max_size="0" />
+<column name="name" type="string" bytes="765" max_size="0" />
+<column name="isin" type="string" bytes="765" max_size="0" />
+<column name="is_traded" type="int32" />
+<column name="emitent_id" type="int32" />
+<column name="emitent_title" type="string" bytes="765" max_size="0" />
+<column name="emitent_inn" type="string" bytes="30" max_size="0" />
+<column name="emitent_okpo" type="string" bytes="24" max_size="0" />
+<column name="gosreg" type="string" bytes="189" max_size="0" />
+<column name="type" type="string" bytes="93" max_size="0" />
+<column name="group" type="string" bytes="93" max_size="0" />
+<column name="primary_boardid" type="string" bytes="12" max_size="0" />
+<column name="marketprice_boardid" type="string" bytes="12" max_size="0" />
+</columns>
+</metadata>
+<rows>
+<row id="154676" secid="AAPL" shortname="Apple" regnumber="" name="Apple Inc." isin="US0378331005" is_traded="1" emitent_id="1281003" emitent_title="Apple Inc" emitent_inn="" emitent_okpo="" gosreg="" type="common_share" group="stock_shares" primary_boardid="EQRD" marketprice_boardid="" />
+<row id="12441" secid="ABRD" shortname="АбрауДюрсо" regnumber="1-02-12500-A" name="Абрау-Дюрсо ПАО ао" isin="RU000A0JS5T7" is_traded="1" emitent_id="2556" emitent_title="Публичное акционерное общество &quot;Абрау – Дюрсо&quot;" emitent_inn="7727620673" emitent_okpo="81521198" gosreg="1-02-12500-A" type="common_share" group="stock_shares" primary_boardid="TQBR" marketprice_boardid="TQBR" />
+</rows>
+</data>
+</document>

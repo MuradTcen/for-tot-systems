@@ -61,6 +61,7 @@ public class History extends BaseEntity implements Serializable {
         History history = new History();
 
         history.setVolume(historyDto.getVolume());
+        history.setValue(historyDto.getValue());
         history.setClose(historyDto.getClose());
         history.setHigh(historyDto.getHigh());
         history.setLow(historyDto.getLow());

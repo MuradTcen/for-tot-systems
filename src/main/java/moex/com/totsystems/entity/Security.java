@@ -1,6 +1,7 @@
 package moex.com.totsystems.entity;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import moex.com.totsystems.dto.SecurityDto;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Entity(name = "securities")
 @EntityListeners(AuditingEntityListener.class)
+@RequiredArgsConstructor
 @Data
 public class Security extends BaseEntity{
 

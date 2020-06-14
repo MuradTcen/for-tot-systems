@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+<data id="history">
+<metadata>
+<columns>
+<column name="BOARDID" type="string" bytes="12" max_size="0" />
+<column name="TRADEDATE" type="date" bytes="10" max_size="0" />
+<column name="SHORTNAME" type="string" bytes="189" max_size="0" />
+<column name="SECID" type="string" bytes="36" max_size="0" />
+<column name="NUMTRADES" type="double" />
+<column name="VALUE" type="double" />
+<column name="OPEN" type="double" />
+<column name="LOW" type="double" />
+<column name="HIGH" type="double" />
+<column name="LEGALCLOSEPRICE" type="double" />
+<column name="WAPRICE" type="double" />
+<column name="CLOSE" type="double" />
+<column name="VOLUME" type="double" />
+<column name="MARKETPRICE2" type="double" />
+<column name="MARKETPRICE3" type="double" />
+<column name="ADMITTEDQUOTE" type="double" />
+<column name="MP2VALTRD" type="double" />
+<column name="MARKETPRICE3TRADESVALUE" type="double" />
+<column name="ADMITTEDVALUE" type="double" />
+<column name="WAVAL" type="double" />
+</columns>
+</metadata>
+<rows>
+<row BOARDID="TQBR" TRADEDATE="2020-06-11" SHORTNAME="АбрауДюрсо" SECID="ABRD" NUMTRADES="60" VALUE="299220" OPEN="129.5" LOW="129.5" HIGH="130.5" LEGALCLOSEPRICE="130" WAPRICE="130" CLOSE="130.5" VOLUME="2300" MARKETPRICE2="" MARKETPRICE3="130" ADMITTEDQUOTE="130" MP2VALTRD="0" MARKETPRICE3TRADESVALUE="512750" ADMITTEDVALUE="0" WAVAL="" />
+<row BOARDID="TQDE" TRADEDATE="2020-06-11" SHORTNAME="АСКО ао" SECID="ACKO" NUMTRADES="138" VALUE="240662" OPEN="5.12" LOW="5.02" HIGH="5.12" LEGALCLOSEPRICE="5.06" WAPRICE="5.06" CLOSE="5.08" VOLUME="47600" MARKETPRICE2="" MARKETPRICE3="5.08" ADMITTEDQUOTE="5.06" MP2VALTRD="0" MARKETPRICE3TRADESVALUE="504372" ADMITTEDVALUE="0" WAVAL="" />
+</rows>
+</data>
+<data id="history.cursor">
+<metadata>
+<columns>
+<column name="INDEX" type="int64" />
+<column name="TOTAL" type="int64" />
+<column name="PAGESIZE" type="int64" />
+</columns>
+</metadata>
+<rows>
+<row INDEX="0" TOTAL="478" PAGESIZE="100" />
+</rows>
+</data>
+</document>
