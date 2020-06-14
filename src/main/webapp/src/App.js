@@ -38,7 +38,7 @@ function App() {
                         </Switch>
                     </Col>
                 </Row>
-                <Footer/>
+                {/*<Footer/>*/}
             </Container>
         </Router>
     );
