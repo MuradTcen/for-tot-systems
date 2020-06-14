@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/security")
-@Slf4j
 @Validated
 @RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000", "https://tot-systems.herokuapp.com/"})
@@ -32,7 +31,7 @@ public class SecurityController {
 
     @ApiOperation(value = "Получить список ценных бумаг")
     @GetMapping
-    public Page<Security> list(int page, int size) {
+    public Page<Security> list(@RequestParam int page, @RequestParam int size) {
         return securityService.getAll(PageRequest.of(page, size));
     }
 
@@ -72,7 +71,7 @@ public class SecurityController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "import")
     public void importByXml(@RequestParam("file") MultipartFile file) {
-        //todo: проверку на тип файла и сделать проперти
+        //todo: проверку на тип файла
         String filename = fileStorageService.storeFile(file);
         securityService.importByXml("upload/" + filename);
     }

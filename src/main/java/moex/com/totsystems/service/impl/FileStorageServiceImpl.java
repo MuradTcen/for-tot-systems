@@ -36,7 +36,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-        log.info(fileName);
+        log.info("Saving file: " + fileName);
 
         try {
             if (fileName.contains("..")) {
@@ -48,6 +48,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
             return fileName;
         } catch (IOException ex) {
+            log.error("Could not store file " + fileName + ". Please try again!", ex);
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }

@@ -1,6 +1,7 @@
 package moex.com.totsystems.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import moex.com.totsystems.dto.SecurityDto;
 import moex.com.totsystems.entity.Security;
 import moex.com.totsystems.repository.SecurityRepository;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityServiceImpl implements SecurityService {
     private final SecurityRepository repository;
     private final XMLstaxSecurityParser parser;
@@ -39,6 +41,8 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public Optional<Security> update(SecurityDto dto) {
+        log.info(String.format("Updating security with secid {}", dto.getSecid()));
+
         Security security = repository.findFirstBySecid(dto.getSecid()).orElseThrow(
                 () -> new EntityNotFoundException("Security Not Found")
         );
@@ -54,6 +58,8 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public void delete(String secid) {
+        log.info(String.format("Deleting security with secid {}", secid));
+
         repository.findById(secid).orElseThrow(
                 () -> new EntityNotFoundException("Security Not Found")
         );
@@ -63,6 +69,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public void importByXml(String file) {
+        log.info("Importing securities.xml");
         List<Security> securities = parser.parseXMLfile(file);
         securities.forEach(security -> addSecurity(security));
     }

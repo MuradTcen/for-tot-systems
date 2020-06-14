@@ -1,6 +1,5 @@
 package moex.com.totsystems.repository.specification;
 
-import lombok.extern.slf4j.Slf4j;
 import moex.com.totsystems.dto.enums.FilterField;
 import moex.com.totsystems.entity.History;
 import moex.com.totsystems.entity.Security;
@@ -9,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
 
-@Slf4j
 public class FilterHistoryByField implements Specification<History> {
     private String desiredContent;
     private String field;

@@ -58,11 +58,13 @@ public class HistoryServiceImpl implements HistoryService {
             repository.save(history);
             return null;
         }
+
         return history;
     }
 
     public void addFailedHistory(History history) {
         log.info("Start failed securty downloading with secid: " + history);
+
         moexService.downloadSecurityFile(history.getSecid());
         securityService.importByXml(directory + history.getSecid() + ".xml");
 
@@ -75,6 +77,8 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public Optional<History> update(HistoryDto dto) {
+        log.info(String.format("Updating history with tradedate {} and secid {}", dto.getTradedate(), dto.getSecid()));
+
         History history = repository.findByTradedateAndSecid(dto.getTradedate(), dto.getSecid())
                 .orElseThrow(
                         () -> new EntityNotFoundException("History Not Found")
@@ -93,6 +97,8 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public void deleteByDateAndSecid(LocalDate date, String secid) {
+        log.info(String.format("Deleting history with tradedate {} and secid {}", date, secid));
+
         repository.findByTradedateAndSecid(date, secid).orElseThrow(
                 () -> new EntityNotFoundException(String.format("History by date: {} and secid: {} Not Found", date, secid))
         );
@@ -113,6 +119,8 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public void importByXml(String file) {
+        log.info("Importing histories.xml");
+
         List<History> histories = historyParser.parseXMLfile(file);
         Set<History> failed = new HashSet<>();
         histories.forEach(history -> failed.add(addHistory(history)));
