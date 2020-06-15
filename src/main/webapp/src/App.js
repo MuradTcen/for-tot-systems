@@ -39,6 +39,7 @@ function App() {
                     </Col>
                 </Row>
                 {/*<Footer/>*/}
+                {/*<Footer/>*/}
             </Container>
         </Router>
     );
